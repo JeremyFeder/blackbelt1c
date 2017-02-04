@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Success!!</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'login_reg/css/style.css' %}">
+  </head>
+  <body>
+    <h1>Hello {{request.session.user.user_name}}!  You are now logged in.</h1>
+    <div id="links">
+      <div class="ninja">
+        <a href="{% url 'wishlist:index' %}">Manage Your Wishlist</a>
+      </div>
+      <a href="{% url 'user_con:logout' %}">Logout</a>
+    </div>
+  </body>
+</html>

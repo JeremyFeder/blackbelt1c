@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wish List</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'wishlist/css/main.css' %}">
+  </head>
+  <body>
+    <h1>Hello {{request.session.user.user_name}}!   You are now logged in.</h1>
+    <a href="{% url 'user_con:logout' %}">Logout</a>
+    <a href="/wishlist/new">Create a new Item!</a>
+    <h3>Your Wish List</h3>
+    {% if my_items %}
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Created by</th>
+            <th>Date Added</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in my_items %}
+          <tr>
+            <td><a href="/wishlist/{{item.id}}/">{{item.itm}}</a></td>
+            <td>{{item.addby}}</td>
+            <td>{{item.dateadd}}</td>
+            <td>
+              <a href="{%  url 'wishlist:remove' item.id %}" value="remove">Remove Item</a>
+              <form action="/wishlist/{{item.id}}/destroy/" method='post' class='delete'>
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Your Wish List is currently empty.  You can either add items from the Items List below, or create a new Item!</p>
+    {% endif %}
+
+    <h3>Items List</h3>
+    {% if other_items %}
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Created by</th>
+            <th>Date Added</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in other_items %}
+            <tr>
+              <td><a href="/wishlist/{{item.id}}/">{{item.itm}}</a></td>
+              <td>{{item.addby}}</td>
+              <td>{{item.dateadd}}</td>
+              <td>
+                <a class="button" href="{%  url 'wishlist:add' item.id %}">Add This To My Wishlist!</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No Items have been added here yet.</p>
+    {% endif %}
+  </body>
+</html>

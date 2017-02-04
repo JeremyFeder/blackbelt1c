@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Item details</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'wishlist/css/styles.css' %}">
+  </head>
+  <body>
+    <h2>Item: {{ item_name }}</h2>
+    <h4>Users who added this item in their Wish List</h4>
+    {% for user in users %}
+      <p>{{ user.user_name }}</p>
+    {% empty %}
+      <p>--No One has added this Item to their Wish List Yet!--</p>
+    {% endfor %}
+    <a href="/wishlist/">Back</a>
+  </body>
+</html>

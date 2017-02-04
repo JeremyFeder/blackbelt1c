@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login And Registration</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'login_reg/css/style.css' %}">
+  </head>
+  <body>
+    <h1>Wish List</h1>
+    <p>Please Log In or Register to continue.</p>
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+    <div id="login">
+      <h2>Login</h2>
+      <form action="{% url 'user_con:login' %}" method="post">
+        {% csrf_token %}
+        User Name: <input type="text" name="user_name" placeholder="User Name (Case Sensitive)">
+        Password: <input type="password" name="password" placeholder="password">
+        <input class="buttons" type="submit" value="Login">
+      </form>
+    </div>
+    <p>Not registered yet?  Please Register below!</p>
+    <div id="registration">
+      <h2>Register</h2>
+      <form action="{% url 'user_con:register' %}" method="post">
+        {% csrf_token %}
+        First Name: <input type="text" name="first_name" placeholder="First Name">
+        User Name: <input type="text" name="user_name" placeholder="User Name (Case Sensitive)">
+        Password: <input type="password" name="password" placeholder="password (8+ characters)">
+        Confirm Password: <input type="password" name="confirm_pw" placeholder="Confirm (Must match Password)">
+        Date Hired: <input type="date" name="hire_date" max="" value="" placeholder="YEAR-MO-DY">
+        <input class="buttons" type="submit" value="Register">
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add new item</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'wishlist/css/styles.css' %}">
+  </head>
+  <body>
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+    <h2>Add a new item</h2>
+    <form action="/wishlist/" method='post'>
+      {% csrf_token %}
+      Item: <input type="text" name="itm">
+      <input type="hidden" value="{{request.session.user.user_name}}" name="addby">
+      <input type="hidden" name="dateadd">
+      <input type="submit" value="Create">
+    </form>
+    <a href="/wishlist">Go back</a>
+  </body>
+</html>
